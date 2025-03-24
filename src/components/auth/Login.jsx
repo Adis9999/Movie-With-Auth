@@ -45,9 +45,17 @@ const LoginForm = ({ setToken }) => {
   };
 
   return (
-    <Box display="flex" justifyContent="center" alignItems="center" bgcolor="#f5f5f5" marginTop="150px">
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      bgcolor="#f5f5f5"
+      marginTop="150px"
+    >
       <Box elevation={3} sx={{ padding: 4, width: 400 }}>
-        <Typography variant="h5" gutterBottom>Login</Typography>
+        <Typography variant="h5" gutterBottom>
+          Login
+        </Typography>
 
         {error && <Typography color="error">{error}</Typography>}
 
@@ -72,7 +80,13 @@ const LoginForm = ({ setToken }) => {
             onChange={handleChange}
             required
           />
-          <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2 }}>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+            sx={{ mt: 2 }}
+          >
             Login
           </Button>
         </form>

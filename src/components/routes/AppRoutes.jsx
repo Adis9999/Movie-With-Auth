@@ -6,7 +6,9 @@ import Movies from "../Movies";
 import { useState, useEffect } from "react";
 
 function AppRoutes() {
-  const [token, setToken] = useState(() => localStorage.getItem("token") || null);
+  const [token, setToken] = useState(
+    () => localStorage.getItem("token") || null
+  );
 
   useEffect(() => {
     if (token) {
@@ -19,12 +21,33 @@ function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<AuthLayout />}>
-        <Route index element={token ? <Navigate to="/movies" replace /> : <Navigate to="/sign-in" replace />} />
-        <Route path="sign-up" element={<RegistrationForm setToken={setToken} />} />
+        <Route
+          index
+          element={
+            token ? (
+              <Navigate to="/movies" replace />
+            ) : (
+              <Navigate to="/sign-in" replace />
+            )
+          }
+        />
+        <Route
+          path="sign-up"
+          element={<RegistrationForm setToken={setToken} />}
+        />
         <Route path="sign-in" element={<LoginForm setToken={setToken} />} />
       </Route>
 
-      <Route path="/movies" element={token ? <Movies token={token} /> : <Navigate to="/sign-in" replace />} />
+      <Route
+        path="/movies"
+        element={
+          token ? (
+            <Movies token={token} setToken={setToken} />
+          ) : (
+            <Navigate to="/sign-in" replace />
+          )
+        }
+      />
     </Routes>
   );
 }

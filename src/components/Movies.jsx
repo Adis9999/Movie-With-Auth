@@ -8,10 +8,12 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { styled } from "@mui/system";
+import { useNavigate } from "react-router";
 
 const BASE_URL = "https://933b4fca974931db.mokky.dev/movies";
 
-const Movies = ({ token }) => {
+const Movies = ({ token, setToken }) => {
+  const navigate = useNavigate();
   const [movies, setMovies] = useState([]);
   const [fetchik, setFetchik] = useState(false);
   const [titleAndUrl, setAll] = useState({
@@ -42,7 +44,7 @@ const Movies = ({ token }) => {
       setFetchik((prev) => !prev);
       setAll({ title: "", url: "" });
     } catch (error) {
-      console.error("Ошибка при добавлении фильма:", error);
+      console.error(error);
     }
   };
 
@@ -57,7 +59,7 @@ const Movies = ({ token }) => {
       const data = await response.json();
       setMovies(data);
     } catch (error) {
-      console.error("Ошибка при получении фильмов:", error);
+      console.error(error);
     }
   };
 
@@ -71,7 +73,7 @@ const Movies = ({ token }) => {
       });
       setFetchik((prev) => !prev);
     } catch (error) {
-      console.error("Ошибка при удалении фильма:", error);
+      console.error(error);
     }
   };
 
@@ -87,13 +89,21 @@ const Movies = ({ token }) => {
       });
       setFetchik((prev) => !prev);
     } catch (error) {
-      console.error("Ошибка при изменении избранного:", error);
+      console.error(error);
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setToken(null);
+    navigate("/login");
+  };
+
   useEffect(() => {
-    getAllMovies();
-  }, [fetchik]);
+    if (token) {
+      getAllMovies();
+    }
+  }, [fetchik, token]);
 
   return (
     <>
@@ -119,6 +129,9 @@ const Movies = ({ token }) => {
         <AddButton onClick={addMovie} variant="contained">
           ADD
         </AddButton>
+        <LogoutButton onClick={handleLogout} variant="contained">
+          Logout
+        </LogoutButton>
       </div>
 
       <div
@@ -187,4 +200,10 @@ const FullWidthButton = styled(Button)({
 const TextInput = styled(TextField)({
   marginBottom: "16px",
   maxWidth: 400,
+});
+
+const LogoutButton = styled(Button)({
+  marginTop: "20px",
+  width: 200,
+  backgroundColor: "#ff3333",
 });

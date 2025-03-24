@@ -31,7 +31,7 @@ const RegistrationForm = ({ token }) => {
         navigate("/movies");
       }
       const data = await response.json();
-      token(data.token)
+      token(data.token);
       return data;
     } catch (error) {}
   };
